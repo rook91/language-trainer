@@ -25,8 +25,10 @@ export default class TestPage extends React.Component {
     }
 
     render() {
+        const status = `Question ${this.state.qNum + 1} of ${this.props.data.length}`;
         return (
             <div>
+                <div>{status}</div>
                 <Question data={this.props.data} num={this.state.qNum}/>
                 <Answer data={this.props.data} num={this.state.qNum}/>
                 <div>

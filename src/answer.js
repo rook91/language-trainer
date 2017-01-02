@@ -4,6 +4,14 @@ import React from 'react';
 
 export default class Answer extends React.Component {
 
+    shouldComponentUpdate(newProps) {
+        if (this.props.num !== newProps.num) {
+            this.answerInput.value = '';
+            this.summaryDiv.value = '';
+        }
+        return true;
+    }
+
     checkAnswer() {
         const ans = this.answerInput.value,
             correctAns = this.props.data[this.props.num]['ANSWER'];
@@ -16,23 +24,22 @@ export default class Answer extends React.Component {
         this.forceUpdate();
     }
 
-    shouldComponentUpdate(newProps) {
-        if (this.props.num !== newProps.num) {
-            this.answerInput.value = '';
-            this.summaryDiv.value = '';
+    inputKeyup(e) {
+        if (e.keyCode === 13) {
+            this.checkAnswer();
         }
-        return true;
     }
 
     render() {
-        console.log('render**')
         return (
             <div>
                 <div>
                     <input
                         ref={(input) => {
                             this.answerInput = input;
-                        }}/>
+                        }}
+                        onKeyUp={this.inputKeyup.bind(this)}
+                    />
                     <button
                         onClick={this.checkAnswer.bind(this)}
                     >CHECK
